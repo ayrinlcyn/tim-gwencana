@@ -15,7 +15,7 @@
     
 @endif
 
-<form action='{{url('toko/'.$data->kode_barang)}}' method='post'>
+<form action='{{url('toko/'.$data->kode_barang)}}' method='post' enctype="multipart/form-data">
     @csrf
     @method('PUT')
         <div class="my-3 p-3 bg-body rounded shadow-sm">
@@ -35,7 +35,7 @@
             <div class="mb-3 row">
                 <label for="gambar_barang" class="col-sm-2 col-form-label">GAMBAR</label>
                 <div class="col-sm-10">
-                    <input type="file" class="form-control" name='gambar_barang' id="gambar_barang" value="{{$data->gambar_barang}}">
+                    <input type="file" class="form-control" name='gambar_barang'>
                 </div>
             </div>
             <div class="mb-3 row">

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unique('kode_barang');
             $table->string('nama_barang');
             $table->string('gambar_barang');
-            $table->double('harga_barang');
+            $table->decimal('harga_barang');
             $table->integer('stok_barang');
         });
     }

@@ -42,46 +42,40 @@ class tokoController extends Controller
      */
     public function store(Request $request)
     {
-        Session::flash('kode_barang', $request->kode_barang);
-        Session::flash('nama_barang',$request->nama_barang);
-        Session::flash('harga_barang', $request->harga_barang);
-        Session::flash('gambar_barang', $request->file('gambar_barang')->getClientOriginalName());
-        Session::flash('stok_barang', $request->stok_barang);
-
-        $request -> validate([
+        $request->validate([
             'kode_barang' => 'required|numeric|unique:toko,kode_barang',
             'nama_barang' => 'required',
             'gambar_barang' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'harga_barang' => 'required',
             'stok_barang' => 'required',
-        ],[
+        ], [
             'kode_barang.required' => 'KODE BARANG WAJIB DI ISI',
             'kode_barang.numeric' => 'KODE BARANG WAJIB DI ISI ANGKA',
             'kode_barang.unique' => 'KODE BARANG SUDAH TERDAFTAR',
             'nama_barang.required' => 'NAMA BARANG WAJIB DI ISI',
-            // 'gambar_barang.required' => 'GAMBAR BARANG WAJIB DI ISI',
-            // 'gambar_barang.image' => 'GAMBAR HARUS BERUPA FILE GAMBAR',
-            // 'gambar_barang.mimes' => 'FORMAT GAMBAR HARUS JPEG, PNG, JPG, ATAU GIF',
-            // 'gambar_barang.max' => 'UKURAN GAMBAR TIDAK BOLEH MELEBIHI 2 MB',
             'harga_barang.required' => 'HARGA BARANG WAJIB DI ISI',
             'stok_barang.required' => 'STOK BARANG WAJIB DI ISI',
+            'gambar_barang.required' => 'GAMBAR BARANG WAJIB DI ISI',
+            'gambar_barang.image' => 'GAMBAR HARUS BERUPA FILE GAMBAR',
+            'gambar_barang.mimes' => 'FORMAT GAMBAR HARUS JPEG, PNG, JPG, ATAU GIF',
+            'gambar_barang.max' => 'UKURAN GAMBAR TIDAK BOLEH MELEBIHI 2 MB',
         ]);
-        // $gambar_barang = $request->file('gambar_barang');
-        // $nama_gambar = $gambar_barang->getClientOriginalName();
-        
-        // // ... (proses penyimpanan file dan data lainnya)
-        
+
+        $imageName = time() . '.' . $request->gambar_barang->extension();
+        $request->gambar_barang->move(public_path('gambarbarang'), $imageName);
+        $imagePath = 'gambarbarang/' . $imageName;
 
         $data = [
             'kode_barang' => $request->kode_barang,
             'nama_barang' => $request->nama_barang,
-            'gambar_barang' => $gambar_barang,
+            'gambar_barang' => $imagePath,
             'harga_barang' => $request->harga_barang,
             'stok_barang' => $request->stok_barang,
         ];
 
         toko::create($data);
-        return redirect()->to('toko')->with('success', 'Berhasil menambahkan data');
+
+        return redirect()->route('toko.index')->with('success', 'Berhasil menambahkan data');
     }
 
     /**
@@ -106,20 +100,29 @@ class tokoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request -> validate([
+        $request->validate([
             'nama_barang' => 'required',
-            // 'gambar_barang' => 'required|numeric|unique:toko,gambar_barang'
+            'gambar_barang' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'harga_barang' => 'required',
             'stok_barang' => 'required',
-        ],[
+        ], [
             'nama_barang.required' => 'NAMA BARANG WAJIB DI ISI',
-            // 'gambar_barang.required' => 'KODE BARANG WAJIB DI ISI',
+            'gambar_barang.image' => 'GAMBAR HARUS BERUPA FILE GAMBAR',
+            'gambar_barang.mimes' => 'FORMAT GAMBAR HARUS JPEG, PNG, JPG, ATAU GIF',
+            'gambar_barang.max' => 'UKURAN GAMBAR TIDAK BOLEH MELEBIHI 2 MB',
             'harga_barang.required' => 'HARGA BARANG WAJIB DI ISI',
             'stok_barang.required' => 'STOK BARANG WAJIB DI ISI',
         ]);
+        
+        
+
+        $imageName = time() . '.' . $request->gambar_barang->extension();
+        $request->gambar_barang->move(public_path('gambarbarang'), $imageName);
+        $imagePath = 'gambarbarang/' . $imageName;
+
         $data = [
             'nama_barang' => $request->nama_barang,
-            'gambar_barang' => $request->gambar_barang,
+            'gambar_barang' => $imagePath,
             'harga_barang' => $request->harga_barang,
             'stok_barang' => $request->stok_barang,
         ];
@@ -136,4 +139,4 @@ class tokoController extends Controller
         toko::where('kode_barang',$id)->delete();
         return redirect()->to('toko')->with('success','Berhasil melakukan delete data');
     }
-}
+}   

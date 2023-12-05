@@ -35,7 +35,7 @@
                             <td class="py-5">{{$i}}</td>
                             <td class="py-5">{{$item->kode_barang}}</td>
                             <td class="py-5">{{$item->nama_barang}}</td>
-                            <td class="py-5"><img src="{{ Storage::url('images/nama_gambar.jpg') }}" alt="Gambar Barang" width="50"></td>
+                            <td class="py-5"><img src="{{ asset($item->gambar_barang) }}" alt="Gambar Barang" width="100"></td>
                             <td class="py-5">{{$item->harga_barang}}</td>
                             <td class="py-5">{{$item->stok_barang}}</td>
 

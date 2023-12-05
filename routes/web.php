@@ -20,3 +20,6 @@ Route::get('/', function () {
 
 
 Route::resource('toko', tokoController::class);
+Route::get('toko', [tokoController::class, 'index'])->name('toko.index');
+Route::get('toko/create', [tokoController::class, 'create'])->name('toko.create');
+Route::post('toko', [tokoController::class, 'store'])->name('toko.store');
