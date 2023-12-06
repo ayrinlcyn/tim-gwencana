@@ -8,7 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class toko extends Model
 {
     use HasFactory;
-    protected $fillable =['kode_barang', 'nama_barang', 'gambar_barang', 'harga_barang', 'stok_barang'];
+    protected $primaryKey = "id";
+    protected $fillable =['id','kode_barang', 'nama_barang', 'kategori_id', 'gambar_barang', 'harga_barang', 'stok_barang'];
     protected $table = 'toko';
     public $timestamps = false;
+
+    public function kategori(){
+        return $this->belongsTo(Kategori::class);
+    }
+
+    public function pemesanan(){
+        return $this->belongsTo(Pemesanan::class);
+    }
 }

@@ -22,6 +22,7 @@
                             <th class="col-md-1">No</th>
                             <th class="col-md-2">KODE BARANG</th>
                             <th class="col-md-2">NAMA BARANG</th>
+                            <th class="col-md-2">KATEGORI</th>
                             <th class="col-md-2">GAMBAR</th>
                             <th class="col-md-2">HARGA</th>
                             <th class="col-md-2">STOK</th>
@@ -35,13 +36,14 @@
                             <td class="py-5">{{$i}}</td>
                             <td class="py-5">{{$item->kode_barang}}</td>
                             <td class="py-5">{{$item->nama_barang}}</td>
+                            <td class="py-5">{{$item->kategori->kategori}}</td>
                             <td class="py-5"><img src="{{ asset($item->gambar_barang) }}" alt="Gambar Barang" width="100"></td>
                             <td class="py-5">{{$item->harga_barang}}</td>
                             <td class="py-5">{{$item->stok_barang}}</td>
 
                             <td>
-                                <a href='{{url('toko/'.$item->kode_barang.'/edit')}}' class="btn btn-warning btn-sm">Edit</a>
-                                <form onsubmit="return confirm('Yakin akan menghapus data?')" action="{{url('toko/'.$item->kode_barang)}}" class="d-inline" method="post">
+                                <a href='{{url('toko/'.$item->id.'/edit')}}' class="btn btn-warning btn-sm">Edit</a>
+                                <form onsubmit="return confirm('Yakin akan menghapus data?')" action="{{url('toko/'.$item->id)}}" class="d-inline" method="post">
                                     @csrf
                                     @method("DELETE")
                                 <button type="submit" name="submit" class="btn btn-danger btn-sm">

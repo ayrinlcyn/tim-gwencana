@@ -20,7 +20,7 @@
         <div class="my-3 p-3 bg-body rounded shadow-sm">
             <a href="{{url('toko')}}"class="btn btn-secondary"><< Kembali</a>
             <div class="mb-3 row">
-                <label for="nim" class="col-sm-2 col-form-label">KODE BARANG</label>
+                <label for="kode_barang" class="col-sm-2 col-form-label">KODE BARANG</label>
                 <div class="col-sm-10">
                     <input type="number" class="form-control" name='kode_barang' id="kode_barang" value="{{Session::get('kode_barang')}}">
                 </div>
@@ -29,6 +29,17 @@
                 <label for="nama" class="col-sm-2 col-form-label">NAMA BARANG</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name='nama_barang' id="nama_barang" value="{{Session::get('nama_barang')}}">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="kategori_id" class="col-sm-2 col-form-label">KATEGORI</label>
+                <div class="col-sm-10">
+                <select class="form-control" name="kategori_id" id="kategori_id">
+                    <option disabled value>pilih kategori</option>
+                    @foreach ($data as $item)
+                    <option value="{{$item->id}}">{{$item->kategori}}</option>            
+                    @endforeach
+                </select>
                 </div>
             </div>
             <div class="mb-3 row">

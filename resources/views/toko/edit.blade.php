@@ -33,6 +33,19 @@
                 </div>
             </div>
             <div class="mb-3 row">
+                <label for="kategori_id" class="col-sm-2 col-form-label">KATEGORI</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="kategori_id" id="kategori_id">
+                        <option value="">Pilih kategori</option>
+                        @foreach ($kategori as $item)
+                            <option value="{{ $item->id }}" {{ $item->id == $data->kategori_id ? 'selected' : '' }}>
+                                {{ $item->kategori }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>            
+            <div class="mb-3 row">
                 <label for="gambar_barang" class="col-sm-2 col-form-label">GAMBAR</label>
                 <div class="col-sm-10">
                     <input type="file" class="form-control" name='gambar_barang'>
