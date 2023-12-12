@@ -15,7 +15,9 @@
     
 @endif
 
-<form action='{{url('toko/'.$data->kode_barang)}}' method='post' enctype="multipart/form-data">
+<form action='{{ url("toko/{$data->id}") }}' method='post' enctype="multipart/form-data">
+
+
     @csrf
     @method('PUT')
         <div class="my-3 p-3 bg-body rounded shadow-sm">

@@ -18,7 +18,7 @@
 <form action='{{url('toko')}}' method='post' enctype="multipart/form-data">
     @csrf
         <div class="my-3 p-3 bg-body rounded shadow-sm">
-            <a href="{{url('toko')}}"class="btn btn-secondary"><< Kembali</a>
+            <a href="{{url('toko')}}"class="btn btn-danger"><i class="ti ti-arrow-left"></i></a>
             <div class="mb-3 row">
                 <label for="kode_barang" class="col-sm-2 col-form-label">KODE BARANG</label>
                 <div class="col-sm-10">
@@ -38,7 +38,7 @@
                     <option disabled value>pilih kategori</option>
                     @foreach ($data as $item)
                     <option value="{{$item->id}}">{{$item->kategori}}</option>            
-                    @endforeach
+                    @endforeach 
                 </select>
                 </div>
             </div>

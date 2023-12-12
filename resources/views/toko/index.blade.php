@@ -1,63 +1,34 @@
 @extends('layout.template')
 @section('konten')
 
-        <!-- START DATA -->
-        <div class="my-3 p-3 bg-body rounded shadow-sm">
-                <!-- FORM PENCARIAN -->
-                <div class="pb-3">
-                  <form class="d-flex" action="{{url('toko')}}" method="get">
-                      <input class="form-control me-1" type="search" name="katakunci" value="{{ Request::get('katakunci') }}" placeholder="Masukkan kata kunci" aria-label="Search">
-                      <button class="btn btn-secondary" type="submit">Cari</button>
-                  </form>
+<div class="my-3 p-3">
+    <div class="row">
+        <?php $i = $data->firstItem() ?>
+        @foreach ($data as $item)
+            <div class="col-md-3 mb-3 rounded-2">
+                <div class="bg-dark-subtle rounded-3 p-2 d-flex align-items-center">
+                    <img src="{{ asset($item->gambar_barang) }}" alt="Gambar Barang" width="" class="img-thumbnail me-2" style="width: 150px; height: 150px; object-fit: cover;">
+                    <div>
+                        <h5 class="card-text">{{$item->nama_barang}}</h5>
+                        <p class="card-text">Rp.{{$item->harga_barang}}</p>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text">Kode: <br> {{$item->kode_barang}}</p>
+                            <p class="card-text">Stok: <br> {{$item->stok_barang}} </p>
+                        </div> 
+                        <form action="{{ route('tambah.ke.keranjang', ['id' => $item->id]) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="toko_id" value="{{ $item->id }}">
+                            <label for="quantity">Jumlah:</label>
+                            <input type="number" name="quantity" value="0" min="0" style="width: 50px" class="form-control-sm">
+                            <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                        </form>
+                    </div>
                 </div>
-                
-                <!-- TOMBOL TAMBAH DATA -->
-                <div class="pb-3">
-                  <a href='{{url('toko/create')}}' class="btn btn-primary">+ Tambah Data</a>
-                </div>
-          
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th class="col-md-1">No</th>
-                            <th class="col-md-2">KODE BARANG</th>
-                            <th class="col-md-2">NAMA BARANG</th>
-                            <th class="col-md-2">KATEGORI</th>
-                            <th class="col-md-2">GAMBAR</th>
-                            <th class="col-md-2">HARGA</th>
-                            <th class="col-md-2">STOK</th>
-                            <th class="col-md-2">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $i = $data->firstItem() ?>
-                        @foreach ($data as $item)
-                        <tr>
-                            <td class="py-5">{{$i}}</td>
-                            <td class="py-5">{{$item->kode_barang}}</td>
-                            <td class="py-5">{{$item->nama_barang}}</td>
-                            <td class="py-5">{{$item->kategori->kategori}}</td>
-                            <td class="py-5"><img src="{{ asset($item->gambar_barang) }}" alt="Gambar Barang" width="100"></td>
-                            <td class="py-5">{{$item->harga_barang}}</td>
-                            <td class="py-5">{{$item->stok_barang}}</td>
+            </div>
+            <?php $i++ ?>
+        @endforeach
+    </div>
+    {{$data->withQueryString()->links()}}
+</div>
 
-                            <td>
-                                <a href='{{url('toko/'.$item->id.'/edit')}}' class="btn btn-warning btn-sm">Edit</a>
-                                <form onsubmit="return confirm('Yakin akan menghapus data?')" action="{{url('toko/'.$item->id)}}" class="d-inline" method="post">
-                                    @csrf
-                                    @method("DELETE")
-                                <button type="submit" name="submit" class="btn btn-danger btn-sm">
-                                    Del
-                                </button>
-                                </form>
-                            </td>
-                        </tr>
-                        <?php $i++ ?>               
-                        @endforeach
-                    </tbody>
-                </table>
-               {{$data->withQueryString()->links()}}
-          </div>
-          <!-- AKHIR DATA -->
-       
 @endsection
